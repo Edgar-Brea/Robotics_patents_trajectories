@@ -19,26 +19,25 @@ data <- data[, names(data) %in% c("patent_id", "pub_date", "ipc_section", "ipc_c
 
 
 ui <- fluidPage(
-    h1(id="big-heading", "Patent classification of robotics-related patents over time"),
+    h1(id="big-heading", "Patent classification trends of robotics-related patents"),
     tags$style(HTML("#big-heading{color: black; font-size: 35px; text-align: center;}")),
     
     h2(id="small-heading", "Data from the PATENTSCOPE database (WIPO)"),
     tags$style(HTML("#small-heading{color: black; font-size: 24px; text-align: center;}")),
-    #titlePanel(HTML("<h1><center><font size: 18> Patent classification of robotics-related patents over time </font></center></h1>"), windowTitle = "Patent classification of robotics-related patents over time"),
-    #titlePanel(HTML("<h2><center><font size: 6> Data from the WIPO PATENTSCOPE database </font></center></h2>")),
+
     tabsetPanel(
-        tabPanel("Heatmap", plotOutput("plot", width = "100%", height = "500px")),
-        tabPanel("Table", DT::DTOutput("table"))
-    ),
+        tabPanel("Heatmap", plotOutput("plot", width = "100%", height = "630px")),
+        tabPanel("Table", DT::DTOutput("table"))),
+    
     hr(),
+    
     fluidRow(
         column(3,
                selectInput("ipc_code_level", "Level of IPC code hierarchy:", c("ipc_maingroup", "ipc_subclass", "ipc_class"))),
         column(4, offset = 1,
                sliderInput("top_x", "No. of IPC codes used for quarterly ranking:", 5, 20, 15, step = 1)),
         column(3,
-               dateRangeInput("dates", "Patent's publication date range:", start = as.Date(min(data$pub_date), format = "%d.%m.%Y"), end = as.Date(max(data$pub_date), format = "%d.%m.%Y")))
-        )
+               dateRangeInput("dates", "Patent's publication date range:", start = as.Date(min(data$pub_date), format = "%d.%m.%Y"), end = as.Date(max(data$pub_date), format = "%d.%m.%Y"))))
 )
 
 
